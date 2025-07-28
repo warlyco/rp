@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Gotu } from 'next/font/google'
 import "./globals.css";
+import { ClusterProvider } from "@/hooks/cluster";
+import { ContextProvider } from "@/providers/context-provider";
+import { Toaster } from "react-hot-toast";
+import classNames from "classnames";
 
 const gotu = Gotu({
   subsets: ['latin'],
@@ -21,9 +25,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={gotu.className}
+        className={classNames(gotu.className, "bg-gray-500 w-full mx-auto")}
       >
-        {children}
+        <ClusterProvider>
+          <ContextProvider>
+            {children}
+            <Toaster />
+          </ContextProvider>
+        </ClusterProvider>
       </body>
     </html>
   );
